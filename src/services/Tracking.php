@@ -109,7 +109,7 @@ class Tracking extends Component
 
       $utmDetails = [];
 
-      $utmDetails['pageUrl']=>$pageUrl;
+      $utmDetails['pageUrl'] = $pageUrl;
 
       if( isset($_COOKIE['pUtmCampaign']) )
       {

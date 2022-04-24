@@ -2,7 +2,7 @@
     "name": "dispositiontools/craft-persistiveutm",
     "description": "Persist UTM values for tracking conversation rates ",
     "type": "craft-plugin",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "keywords": [
         "craft",
         "cms",
