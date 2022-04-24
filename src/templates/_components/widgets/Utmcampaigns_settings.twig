@@ -1,0 +1,26 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * persistiveutm plugin for Craft CMS
+ *
+ * Utmcampaigns Widget Settings
+ *
+ * @author    Disposition Tools
+ * @copyright Copyright (c) 2022 Disposition Tools
+ * @link      https://www.disposition.tools
+ * @package   Persistiveutm
+ * @since     0.0.1
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("dispositiontools\\persistiveutm\\assetbundles\\persistiveutm\\PersistiveutmAsset") %}
+
+{{ forms.textField({
+    label: 'Message',
+    instructions: 'Enter a message here.',
+    id: 'message',
+    name: 'message',
+    value: widget['message']})
+}}

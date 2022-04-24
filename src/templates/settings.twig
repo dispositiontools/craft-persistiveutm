@@ -1,0 +1,77 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * persistiveutm plugin for Craft CMS 3.x
+ *
+ * persistiveutm Settings.twig
+ *
+ * @author    Disposition Tools
+ * @copyright Copyright (c) 2022 Disposition Tools
+ * @link      https://www.disposition.tools
+ * @package   Persistiveutm
+ * @since     0.0.1
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("dispositiontools\\persistiveutm\\assetbundles\\persistiveutm\\PersistiveutmAsset") %}
+
+
+{{ forms.lightswitchField({
+    label: 'Enable persistive utms',
+    instructions: 'Lets you track the source of elements',
+    id: 'enablePersistiveUtm',
+    name: 'enablePersistiveUtm',
+    on: settings['enablePersistiveUtm']})
+}}
+
+{{ forms.lightswitchField({
+    label: 'Use Javascript',
+    instructions: 'Vital if you are using cache',
+    id: 'useJs',
+    name: 'useJs',
+    on: settings['useJs']})
+}}
+
+
+{{ forms.lightswitchField({
+    label: 'Save utm details for new Freeform Submissions',
+    id: 'activateFreeform',
+    name: 'activateFreeform',
+    on: settings['activateFreeform']})
+}}
+
+{{ forms.lightswitchField({
+    label: 'Save utm details for new Orders',
+    id: 'activateCommerce',
+    name: 'activateCommerce',
+    on: settings['activateCommerce']})
+}}
+
+{{ forms.lightswitchField({
+    label: 'Save utm details for new Users',
+    id: 'activateUser',
+    name: 'activateUser',
+    on: settings['activateUser']})
+}}
+
+
+{#
+{{ forms.lightswitchField({
+    label: 'Use inline Js',
+    instructions: 'If using Js, do you want it inline, or as a file?',
+    id: 'inlineJs',
+    name: 'inlineJs',
+    on: settings['inlineJs']})
+}}
+#}
+
+
+{{ forms.textField({
+    label: 'Cookie Length',
+    instructions: 'How long shall we store the cookie for?',
+    id: 'cookieLength',
+    name: 'cookieLength',
+    value: settings['cookieLength']})
+}}

@@ -1,0 +1,45 @@
+{
+    "name": "dispositiontools/craft-persistiveutm",
+    "description": "Persist UTM values for tracking conversation rates ",
+    "type": "craft-plugin",
+    "version": "0.0.1",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "persistiveutm"
+    ],
+    "support": {
+        "docs": "https://github.com/dispositiontools/craft-persistiveutm/persistiveutm/blob/master/README.md",
+        "issues": "https://github.com/dispositiontools/craft-persistiveutm/persistiveutm/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Disposition Tools",
+            "homepage": "https://www.disposition.tools"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+          "dispositiontools\\persistiveutm\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Persistive UTM",
+        "handle": "persistiveutm",
+        "developer": "Disposition Tools",
+        "developerUrl": "https://www.disposition.tools",
+        "documentationUrl": "https://github.com/dispositiontools/craft-persistiveutm/persistiveutm/blob/master/README.md",
+        "changelogUrl": "https://raw.githubusercontent.com/dispositiontools/craft-persistiveutm/persistiveutm/master/CHANGELOG.md",
+        "components": {
+            "tracking": "dispositiontools\\persistiveutm\\services\\Tracking",
+            "reports": "dispositiontools\\persistiveutm\\services\\Reports"
+        },
+        "class": "dispositiontools\\persistiveutm\\Persistiveutm"
+    }
+}

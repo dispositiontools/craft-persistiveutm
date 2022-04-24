@@ -1,0 +1,20 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * persistiveutm plugin for Craft CMS
+ *
+ * Utmcampaigns Widget Body
+ *
+ * @author    Disposition Tools
+ * @copyright Copyright (c) 2022 Disposition Tools
+ * @link      https://www.disposition.tools
+ * @package   Persistiveutm
+ * @since     0.0.1
+ */
+#}
+
+{% set iconUrl = view.getAssetManager().getPublishedUrl('@dispositiontools/persistiveutm/assetbundles/utmcampaignswidget/dist', true) ~ '/img/Utmcampaigns-icon.svg' %}
+
+<img src="{{ iconUrl }}" height="64" width="64" />
+
+<p>{{ message }}</p>
