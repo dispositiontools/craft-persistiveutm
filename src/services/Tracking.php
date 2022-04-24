@@ -132,6 +132,8 @@ class Tracking extends Component
           $utmDetails['landingPageUrl'] = $_COOKIE['persistiveLanding'];
       }
 
+      return $utmDetails;
+
     }
 
     /**
