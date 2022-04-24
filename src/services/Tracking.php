@@ -176,10 +176,10 @@ class Tracking extends Component
     {
 
         $utmDetails = $this->getUtmDetails();
-        $utmDetails['elementId'] = $submission->id;
-        $utmDetails['siteId'] = $submission->siteId;
-        $utmDetails['typeId'] = $submission->formId;
-        $utmDetails['elementType'] = get_class($submission);
+        $utmDetails['elementId'] = $order->id;
+        $utmDetails['siteId'] = $order->siteId;
+        $utmDetails['typeId'] = null;
+        $utmDetails['elementType'] = get_class($order);
         $utmtrackingModel = new UtmtrackingModel($utmDetails);
         $this->saveUtmtracking( $utmtrackingModel );
 
