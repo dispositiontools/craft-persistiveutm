@@ -106,13 +106,32 @@ class Tracking extends Component
       {
         $pageUrl = Craft::$app->request->pathInfo;
       }
-      return [
-        'utmCampaign'=> $_COOKIE['pUtmCampaign'],
-        'utmSource'=> $_COOKIE['pUtmSource'],
-        'utmMedium'=> $_COOKIE['pUtmMedium'],
-        'referrer'=> $_COOKIE['pUtmReferrer'],
-        'pageUrl'=>$pageUrl,
-      ];
+
+      $utmDetails = [];
+
+      $utmDetails['pageUrl']=>$pageUrl;
+
+      if( isset($_COOKIE['pUtmCampaign']) )
+      {
+          $utmDetails['utmCampaign'] = $_COOKIE['pUtmCampaign'];
+      }
+      if( isset($_COOKIE['pUtmSource']) )
+      {
+          $utmDetails['utmSource'] = $_COOKIE['pUtmSource'];
+      }
+      if( isset($_COOKIE['pUtmMedium']) )
+      {
+          $utmDetails['utmMedium'] = $_COOKIE['pUtmMedium'];
+      }
+      if( isset($_COOKIE['pUtmReferrer']) )
+      {
+          $utmDetails['referrer'] = $_COOKIE['pUtmReferrer'];
+      }
+      if( isset($_COOKIE['persistiveLanding']) )
+      {
+          $utmDetails['landingPageUrl'] = $_COOKIE['persistiveLanding'];
+      }
+
     }
 
     /**
