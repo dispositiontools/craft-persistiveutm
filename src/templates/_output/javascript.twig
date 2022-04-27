@@ -43,27 +43,27 @@ var persistiveLanding = window.location;
 
 console.log(persistiveUtmSource,persistiveUtmMedium,persistiveUtmCampaign,persistiveReferrer,persistiveLanding);
 
-if(  ! persistiveUtmCookieService.getCookie('pUtmCampaign') )
+if( persistiveUtmCampaign )
 {
     persistiveUtmCookieService.setCookie('pUtmCampaign',persistiveUtmCampaign, 0);
 }
 
-if(  ! persistiveUtmCookieService.getCookie('pUtmMedium') )
+if( persistiveUtmMedium )
 {
     persistiveUtmCookieService.setCookie('pUtmMedium',persistiveUtmMedium, 0);
 }
 
-if(  ! persistiveUtmCookieService.getCookie('pUtmSource') )
+if(  persistiveUtmSource  )
 {
     persistiveUtmCookieService.setCookie('pUtmSource',persistiveUtmSource, 0);
 }
 
-if(  ! persistiveUtmCookieService.getCookie('pUtmLanding') )
+if( persistiveLanding )
 {
     persistiveUtmCookieService.setCookie('pUtmLanding',persistiveLanding, 0);
 }
 
-if(  ! persistiveUtmCookieService.getCookie('pUtmReferrer') )
+if( persistiveReferrer )
 {
     persistiveUtmCookieService.setCookie('pUtmReferrer',persistiveReferrer, 0);
 }
