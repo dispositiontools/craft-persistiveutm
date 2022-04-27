@@ -58,12 +58,12 @@ if(  persistiveUtmSource  )
     persistiveUtmCookieService.setCookie('pUtmSource',persistiveUtmSource, 0);
 }
 
-if( persistiveLanding )
+if( persistiveLanding && ! persistiveUtmCookieService.getCookie('pUtmLanding' ) )
 {
     persistiveUtmCookieService.setCookie('pUtmLanding',persistiveLanding, 0);
 }
 
-if( persistiveReferrer )
+if( persistiveReferrer && ! persistiveUtmCookieService.getCookie('pUtmReferrer' ) )
 {
     persistiveUtmCookieService.setCookie('pUtmReferrer',persistiveReferrer, 0);
 }

@@ -127,9 +127,9 @@ class Tracking extends Component
       {
           $utmDetails['referrer'] = $_COOKIE['pUtmReferrer'];
       }
-      if( isset($_COOKIE['persistiveLanding']) )
+      if( isset($_COOKIE['pUtmLanding']) )
       {
-          $utmDetails['landingPageUrl'] = $_COOKIE['persistiveLanding'];
+          $utmDetails['landingPageUrl'] = $_COOKIE['pUtmLanding'];
       }
 
       return $utmDetails;
