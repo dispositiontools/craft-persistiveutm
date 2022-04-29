@@ -2,7 +2,7 @@
 /**
  * persistiveutm plugin for Craft CMS 3.x
  *
- * Persist UTM values for tracking conversation rates 
+ * Persist UTM values for tracking conversation rates
  *
  * @link      https://www.disposition.tools
  * @copyright Copyright (c) 2022 Disposition Tools
@@ -64,18 +64,18 @@ class ToolsController extends Controller
     }
 
     /**
-     * Handle persistiveutm/tools/do-something console commands
+     * Handle persistiveutm/tools/clean-empty-values console commands
      *
      * The first line of this method docblock is displayed as the description
      * of the Console Command in ./craft help
      *
      * @return mixed
      */
-    public function actionDoSomething()
+    public function actionCleanEmptyValues()
     {
         $result = 'something';
 
-        echo "Welcome to the console ToolsController actionDoSomething() method\n";
+        Persistiveutm::$plugin->tracking->updateEmptyValues('referrer');
 
         return $result;
     }

@@ -121,7 +121,7 @@ class Persistiveutm extends Plugin
             UrlManager::class,
             UrlManager::EVENT_REGISTER_CP_URL_RULES,
             function (RegisterUrlRulesEvent $event) {
-                $event->rules['cpActionTrigger1'] = 'persistiveutm/utmtracking/do-something';
+                $event->rules['persistiveutm/dashboard'] = 'persistiveutm/reports/dashboard';
                 $event->rules['cpActionTrigger2'] = 'persistiveutm/reports/do-something';
             }
         );

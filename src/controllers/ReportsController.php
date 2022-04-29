@@ -2,7 +2,7 @@
 /**
  * persistiveutm plugin for Craft CMS 3.x
  *
- * Persist UTM values for tracking conversation rates 
+ * Persist UTM values for tracking conversation rates
  *
  * @link      https://www.disposition.tools
  * @copyright Copyright (c) 2022 Disposition Tools
@@ -66,13 +66,31 @@ class ReportsController extends Controller
 
     /**
      * Handle a request going to our plugin's actionDoSomething URL,
-     * e.g.: actions/persistiveutm/reports/do-something
+     * e.g.: actions/persistiveutm/reports/dashboard
      *
      * @return mixed
      */
-    public function actionDoSomething()
+    public function actionDashboard()
     {
         $result = 'Welcome to the ReportsController actionDoSomething() method';
+
+        $trackingData = Persistiveutm::$plugin->tracking->getTrackingDetails(["limit"=>10]);
+        $campaignStats =  Persistiveutm::$plugin->reports->getDataSummary(['dataType'=>'utmCampaign']);
+        $sourceStats =  Persistiveutm::$plugin->reports->getDataSummary(['dataType'=>'utmSource']);
+        $mediumStats =  Persistiveutm::$plugin->reports->getDataSummary(['dataType'=>'utmMedium']);
+
+        return $this->renderTemplate(
+            'persistiveutm/_cp/dashboard',
+            [
+                'title'            => 'Persistive UTM',
+                'trackingData'    =>   $trackingData,
+                'campaignStats' =>  $campaignStats,
+                'sourceStats' =>  $sourceStats,
+                'mediumStats' =>  $mediumStats,
+                'settings' =>  Persistiveutm::$plugin->getSettings()
+            ]
+        );
+        //print_r($trackingData);
 
         return $result;
     }

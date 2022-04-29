@@ -55,6 +55,86 @@ class Tracking extends Component
         return $result;
     }
 
+    // Persistiveutm::$plugin->tracking->updateEmptyValues()
+    public function updateEmptyValues( $type='utmCampaign' )
+    {
+        $records = UtmtrackingRecord::findAll([ $type => '']);
+        echo count( $records );
+       foreach($records as $record)
+       {
+         $model = new UtmtrackingModel($record);
+         echo $model->id . "\n";
+         if($model->utmCampaign == '')
+         {
+           $model->utmCampaign = null;
+         }
+         if($model->utmSource == '')
+         {
+           $model->utmSource = null;
+         }
+         if($model->utmMedium == '')
+         {
+           $model->utmMedium = null;
+         }
+         if($model->referrer == '')
+         {
+           $model->referrer = null;
+         }
+         $this->saveUtmtracking($model);
+         unset($model);
+
+       }
+
+        return true;
+    }
+
+
+    /**
+     * This function can literally be anything you want, and you can have as many service
+     * functions as you want
+     *
+     * From any other plugin file, call it like this:
+     *
+     *     Persistiveutm::$plugin->tracking->getTrackingDetails()
+     *
+     * @return mixed
+     */
+    public function getTrackingDetails( $options = array() )
+    {
+        // Check our Plugin's settings for `someAttribute`
+        /*
+        if (Persistiveutm::$plugin->getSettings()->someAttribute)
+        {
+        }
+        */
+        $models = [];
+        $recordsQuery = UtmtrackingRecord::find();
+
+        if(array_key_exists("limit",$options ))
+        {
+          $recordsQuery->limit($options['limit']);
+        }
+
+        if(array_key_exists("dateStart",$options ))
+        {
+          $recordsQuery->andWhere([’>’, ‘dateCreated’, $options['dateStart']]);
+        }
+        if(array_key_exists("dateEnd",$options ))
+        {
+          $recordsQuery->andWhere([’<’, ‘dateCreated’, $options['dateEnd']]);
+        }
+
+
+        $recordsQuery->orderBy("dateCreated DESC");
+        $records = $recordsQuery->all();
+        foreach($records as $record)
+        {
+            $model = new UtmtrackingModel($record);
+            $models[] = $model->toArray();
+        }
+        return $models;
+    }
+
     public function getUtmtrackingById($id)
     {
         $record = UtmtrackingRecord::findOne(
