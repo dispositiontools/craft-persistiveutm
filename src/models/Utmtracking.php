@@ -103,6 +103,46 @@ class Utmtracking extends Model
      */
     public $utmMedium = null;
 
+
+    /**
+     * Some model attribute
+     *
+     * @var string
+     */
+    public $utmContent = null;
+
+
+    /**
+     * Some model attribute
+     *
+     * @var string
+     */
+    public $utmTerm = null;
+
+
+    /**
+     * Some model attribute
+     *
+     * @var string
+     */
+    public $parsedStatus = null;
+
+
+    /**
+     * Some model attribute
+     *
+     * @var string
+     */
+    public $channel = null;
+
+
+    /**
+     * Some model attribute
+     *
+     * @var string
+     */
+    public $referrerDomain = null;
+
     /**
      * Some model attribute
      *
@@ -140,6 +180,15 @@ class Utmtracking extends Model
      * @var int
      */
     public $typeId = null;
+
+
+
+    /**
+     * Some model attribute
+     *
+     * @var int
+     */
+    public $userId = null;
 
     // Public Methods
     // =========================================================================

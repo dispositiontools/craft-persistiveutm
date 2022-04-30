@@ -38,6 +38,8 @@ function getQueryVariable(variable)
 var persistiveUtmSource = getQueryVariable('utm_source');
 var persistiveUtmMedium = getQueryVariable('utm_medium');
 var persistiveUtmCampaign = getQueryVariable('utm_campaign');
+var persistiveUtmTerm = getQueryVariable('utm_term');
+var persistiveUtmContent = getQueryVariable('utm_content');
 var persistiveReferrer = document.referrer;
 var persistiveLanding = window.location;
 
@@ -56,6 +58,16 @@ if( persistiveUtmMedium )
 if(  persistiveUtmSource  )
 {
     persistiveUtmCookieService.setCookie('pUtmSource',persistiveUtmSource, 0);
+}
+
+if(  persistiveUtmTerm  )
+{
+    persistiveUtmCookieService.setCookie('pUtmTerm',persistiveUtmTerm, 0);
+}
+
+if(  persistiveUtmContent  )
+{
+    persistiveUtmCookieService.setCookie('pUtmContent',persistiveUtmContent, 0);
 }
 
 if( persistiveLanding && ! persistiveUtmCookieService.getCookie('pUtmLanding' ) )

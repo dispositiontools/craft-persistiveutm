@@ -78,6 +78,7 @@ class ReportsController extends Controller
         $campaignStats =  Persistiveutm::$plugin->reports->getDataSummary(['dataType'=>'utmCampaign']);
         $sourceStats =  Persistiveutm::$plugin->reports->getDataSummary(['dataType'=>'utmSource']);
         $mediumStats =  Persistiveutm::$plugin->reports->getDataSummary(['dataType'=>'utmMedium']);
+        $referrerStats =  Persistiveutm::$plugin->reports->getDataSummary(['dataType'=>'referrerDomain']);
 
         return $this->renderTemplate(
             'persistiveutm/_cp/dashboard',
@@ -87,6 +88,7 @@ class ReportsController extends Controller
                 'campaignStats' =>  $campaignStats,
                 'sourceStats' =>  $sourceStats,
                 'mediumStats' =>  $mediumStats,
+                'referrerStats' =>  $referrerStats,
                 'settings' =>  Persistiveutm::$plugin->getSettings()
             ]
         );

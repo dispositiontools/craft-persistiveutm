@@ -76,7 +76,7 @@ class Persistiveutm extends Plugin
      *
      * @var string
      */
-    public $schemaVersion = '0.0.1';
+    public $schemaVersion = '0.0.9';
 
     /**
      * Set to `true` if the plugin should have a settings view in the control panel.
@@ -121,7 +121,7 @@ class Persistiveutm extends Plugin
             UrlManager::class,
             UrlManager::EVENT_REGISTER_CP_URL_RULES,
             function (RegisterUrlRulesEvent $event) {
-                $event->rules['persistiveutm/dashboard'] = 'persistiveutm/reports/dashboard';
+                $event->rules['persistiveutm'] = 'persistiveutm/reports/dashboard';
                 $event->rules['cpActionTrigger2'] = 'persistiveutm/reports/do-something';
             }
         );

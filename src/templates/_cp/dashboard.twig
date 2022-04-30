@@ -1,0 +1,355 @@
+{% extends "_layouts/cp" %}
+
+{% import "_includes/forms" as forms %}
+
+{# The URL to this plugin's base CP section #}
+{% set pluginCpUrl = url('persistiveutm') %}
+
+
+{# Content that should appear in the page header#}
+{% set extraPageHeaderHtml %}
+    <div class="buttons">
+        <a href="{{ pluginCpUrl }}" class="btn submit add icon">{{ "Click Me!"|t('persistiveutm') }}</a>
+    </div>
+{% endset %}
+
+{# The content of the CP Section#}
+{% set content %}
+
+<style>
+.persistivePane{
+  width:100%;
+  display:block;
+}
+
+
+@media only screen and (min-width: 600px) {
+.persistivePane{
+    width:49%;
+  }
+}
+
+@media only screen and (min-width: 800px) {
+.persistivePane{
+    width:32%;
+  }
+}
+
+</style>
+    <h2>Dashboard</h2>
+
+<div style="width:100%;display:flex;gap: 10px; margin-bottom:20px;flex-wrap: wrap;justify-content: space-between;">
+  <div class="pane first last persistivePane" >
+    <h3>Campaigns</h3>
+    <div class="" id="chartjs-dashboard-campaign" style="width:100%;"></div>
+  </div>
+  <div class="pane first last persistivePane" >
+    <h3>Sources</h3>
+    <div class="" id="chartjs-dashboard-source" style="width:100%;"></div>
+  </div>
+  <div class="pane first last persistivePane" >
+    <h3>Medium</h3>
+    <div class="" id="chartjs-dashboard-medium" style="width:100%;"></div>
+  </div>
+  <div class="pane first last persistivePane" >
+    <h3>Referrer</h3>
+    <div class="" id="chartjs-dashboard-referrer" style="width:100%;"></div>
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+      var optionsCampaign = {
+        series: [
+        {% for data in campaignStats %}
+          {{ data.total }}{% if not loop.last %},{% endif%}
+        {% endfor %}
+        ],
+        labels: [{% for data in campaignStats %}
+          '{{ data.utmCampaign|default("No campaign") }}'{% if not loop.last %},{% endif%}
+        {% endfor %}],
+        chart: {
+        type: 'pie',
+        },
+          options: {
+
+          },
+          legend: {
+            show: false
+          }
+      };
+
+      var chartCampaign = new ApexCharts(document.querySelector("#chartjs-dashboard-campaign"), optionsCampaign);
+      chartCampaign.render();
+
+
+      var optionsSource = {
+        series: [
+        {% for data in sourceStats %}
+          {{ data.total }}{% if not loop.last %},{% endif%}
+        {% endfor %}
+        ],
+        labels: [{% for data in sourceStats %}
+          '{{ data.utmSource|default("No source") }}'{% if not loop.last %},{% endif%}
+        {% endfor %}],
+        chart: {
+        type: 'pie',
+        },
+          options: {
+
+          },
+          legend: {
+            show: false
+          }
+      };
+
+      var chartSource = new ApexCharts(document.querySelector("#chartjs-dashboard-source"), optionsSource);
+      chartSource.render();
+
+
+
+      var optionsMedium = {
+        series: [
+        {% for data in mediumStats %}
+          {{ data.total }}{% if not loop.last %},{% endif%}
+        {% endfor %}
+        ],
+        labels: [{% for data in mediumStats %}
+          '{{ data.utmMedium|default("No medium") }}'{% if not loop.last %},{% endif%}
+        {% endfor %}],
+        chart: {
+        type: 'pie',
+        },
+          options: {
+
+          },
+          legend: {
+            show: false
+          }
+      };
+
+      var chartMedium = new ApexCharts(document.querySelector("#chartjs-dashboard-medium"), optionsMedium);
+      chartMedium.render();
+
+
+      var optionsReferrer = {
+        series: [
+        {% for data in referrerStats %}
+          {{ data.total }}{% if not loop.last %},{% endif%}
+        {% endfor %}
+        ],
+        labels: [{% for data in referrerStats %}
+          '{{ data.referrerDomain|default("No referrer") }}'{% if not loop.last %},{% endif%}
+        {% endfor %}],
+        chart: {
+        type: 'pie',
+        },
+          options: {
+
+          },
+          legend: {
+            show: false
+          }
+      };
+
+      var chartReferrer = new ApexCharts(document.querySelector("#chartjs-dashboard-referrer"), optionsReferrer);
+      chartReferrer.render();
+
+
+});
+</script>
+
+
+
+<div class="fullwidth block" style="margin-bottom:20px;padding:24px;box-sizing: border-box;">
+<div class="tableview tablepane">
+        <table class="data fullwidth" >
+<thead>
+<tr>
+   <th  style="width:300px;">Campaign</th>
+   {% if settings.activateUser %}
+   <th>Users</th>
+   {% endif %}
+   {% if settings.activateCommerce %}
+   <th>Orders</th>
+   {% endif %}
+   {% if settings.activateFreeform %}
+   <th>Freeform Spam</th>
+   <th>Freeform Submission</th>
+   {% endif %}
+   <th>Total</th>
+  </tr>
+</thead>
+<tbody>
+    {% for data in campaignStats %}
+    <tr>
+       <th style="width:300px;">{{ data.utmCampaign }}</th>
+       {% if settings.activateUser %}
+       <td class="text-right" style="text-align:right;">{{ data.user }}</td>
+       {% endif %}
+       {% if settings.activateCommerce %}
+       <td class="text-right" style="text-align:right;">{{ data.order }}</td>
+       {% endif %}
+       {% if settings.activateFreeform %}
+       <td class="text-right" style="text-align:right;">{{ data.ffSpam }}</td>
+       <td class="text-right" style="text-align:right;">{{ data.ffSubmission }}</td>
+       {% endif %}
+       <td class="text-right bold" style="text-align:right;font-weight:bold;">{{ data.total }}</td>
+      </tr>
+    {% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+
+
+
+
+
+<div class="fullwidth block" style="margin-bottom:20px;padding:24px;box-sizing: border-box;">
+<div class="tableview tablepane">
+        <table class="data fullwidth" >
+<thead>
+<tr>
+   <th style="width:300px;">Source</th>
+   {% if settings.activateUser %}
+   <th>Users</th>
+   {% endif %}
+   {% if settings.activateCommerce %}
+   <th>Orders</th>
+   {% endif %}
+   {% if settings.activateFreeform %}
+   <th>Freeform Spam</th>
+   <th>Freeform Submission</th>
+   {% endif %}
+   <th>Total</th>
+  </tr>
+</thead>
+<tbody>
+    {% for data in sourceStats %}
+    <tr>
+       <th style="width:300px;">{{ data.utmSource }}</th>
+       {% if settings.activateUser %}
+       <td class="text-right" style="text-align:right;">{{ data.user }}</td>
+       {% endif %}
+       {% if settings.activateCommerce %}
+       <td class="text-right" style="text-align:right;">{{ data.order }}</td>
+       {% endif %}
+       {% if settings.activateFreeform %}
+       <td class="text-right" style="text-align:right;">{{ data.ffSpam }}</td>
+       <td class="text-right" style="text-align:right;">{{ data.ffSubmission }}</td>
+       {% endif %}
+       <td class="text-right bold" style="text-align:right;font-weight:bold;">{{ data.total }}</td>
+      </tr>
+    {% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+
+
+
+<div class="fullwidth block" style="margin-bottom:20px;padding:24px;box-sizing: border-box;">
+<div class="tableview tablepane">
+        <table class="data fullwidth" >
+<thead>
+<tr>
+   <th  style="width:300px;">Medium</th>
+   {% if settings.activateUser %}
+   <th>Users</th>
+   {% endif %}
+   {% if settings.activateCommerce %}
+   <th>Orders</th>
+   {% endif %}
+   {% if settings.activateFreeform %}
+   <th>Freeform Spam</th>
+   <th>Freeform Submission</th>
+   {% endif %}
+   <th>Total</th>
+  </tr>
+</thead>
+<tbody>
+    {% for data in mediumStats %}
+    <tr>
+       <th  style="width:300px;">{{ data.utmMedium }}</th>
+       {% if settings.activateUser %}
+       <td class="text-right" style="text-align:right;">{{ data.user }}</td>
+       {% endif %}
+       {% if settings.activateCommerce %}
+       <td class="text-right" style="text-align:right;">{{ data.order }}</td>
+       {% endif %}
+       {% if settings.activateFreeform %}
+       <td class="text-right" style="text-align:right;">{{ data.ffSpam }}</td>
+       <td class="text-right" style="text-align:right;">{{ data.ffSubmission }}</td>
+       {% endif %}
+       <td class="text-right bold" style="text-align:right;font-weight:bold;">{{ data.total }}</td>
+      </tr>
+    {% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+<p>&nbsp;</p>
+
+
+<div class="fullwidth block" style="margin-bottom:20px;padding:24px;box-sizing: border-box;">
+
+<div class="tableview tablepane">
+        <table class="data fullwidth" >
+            <thead>
+            <tr>
+
+                <th scope="col">Date</th>
+                                                <th scope="col">Campaign</th>
+                                                <th scope="col" >Source</th>
+                                                <th scope="col" >Medium</th>
+                                                <th scope="col" >Landing Page</th>
+                                                <th scope="col" >Url</th>
+                                                <th scope="col" >Element Type</th>
+                        </tr>
+            </thead>
+            <tbody>
+
+            {% for trackingItem in trackingData %}
+                <tr data-id="{{ trackingItem.id }}" data-level="1" data-descendants="0" tabindex="0">
+<td data-title="Link" data-attr="link">
+  {{ trackingItem.dateCreated|date("Y-m-d") }}
+</td>
+<td data-title="Link" data-attr="link">
+  {{ trackingItem.utmCampaign }}
+</td>
+
+<td data-title="Link" data-attr="link">
+  {{ trackingItem.utmSource }}
+</td>
+<td data-title="Link" data-attr="link">
+  {{ trackingItem.utmMedium }}
+</td>
+<td data-title="Location Name" data-attr="field:206">
+  {{ trackingItem.landingPageUrl }}
+</td>
+<td data-title="Show Call Back form" data-attr="field:321">
+{{ trackingItem.pageUrl }}
+</td>
+<td data-title="Care Home Secondary Attributes" data-attr="field:322">
+
+{{ trackingItem.elementType }}
+
+</td>
+</tr>
+  {% endfor %}
+
+                </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+{% endset %}

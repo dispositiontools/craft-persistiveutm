@@ -89,6 +89,41 @@ class Tracking extends Component
     }
 
 
+    public function parseReferrers()
+    {
+        $records = UtmtrackingRecord::findAll([ 'referrerDomain' => null]);
+        echo count( $records );
+       foreach($records as $record)
+       {
+           $saveModel = false;
+           $model = new UtmtrackingModel($record);
+           echo $model->id . "\n";
+
+           if($model->referrerDomain == null)
+           {
+
+             $urlDetails = parse_url( $model->referrer );
+             if(array_key_exists('host',$urlDetails) )
+             {
+                 $model->referrerDomain = $urlDetails['host'];
+                 $saveModel = true;
+             }
+
+
+           }
+           if($saveModel)
+           {
+             $this->saveUtmtracking($model);
+           }
+
+           unset($model);
+
+       }
+
+        return true;
+    }
+
+
     /**
      * This function can literally be anything you want, and you can have as many service
      * functions as you want
@@ -206,10 +241,34 @@ class Tracking extends Component
       if( isset($_COOKIE['pUtmReferrer']) )
       {
           $utmDetails['referrer'] = $_COOKIE['pUtmReferrer'];
+
+          $urlDetails = parse_url( $utmDetails['referrer'] );
+          if(array_key_exists('host',$urlDetails) )
+          {
+              $utmDetails['referrerDomain'] = $urlDetails['host'];
+          }
+
       }
+      if( isset($_COOKIE['pUtmContent']) )
+      {
+          $utmDetails['utmContent'] = $_COOKIE['pUtmContent'];
+      }
+
+      if( isset($_COOKIE['pUtmTerm']) )
+      {
+          $utmDetails['utmTerm'] = $_COOKIE['pUtmTerm'];
+      }
+
+
       if( isset($_COOKIE['pUtmLanding']) )
       {
           $utmDetails['landingPageUrl'] = $_COOKIE['pUtmLanding'];
+      }
+
+      $currentUser = Craft::$app->getUser()->getIdentity();
+      if($currentUser)
+      {
+          $utmDetails['userId'] = $currentUser->id;
       }
 
       return $utmDetails;

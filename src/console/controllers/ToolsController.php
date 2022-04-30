@@ -79,4 +79,22 @@ class ToolsController extends Controller
 
         return $result;
     }
+
+
+    /**
+     * Handle persistiveutm/tools/parse-referrers console commands
+     *
+     * The first line of this method docblock is displayed as the description
+     * of the Console Command in ./craft help
+     *
+     * @return mixed
+     */
+    public function actionParseReferrers()
+    {
+        $result = 'something';
+
+        Persistiveutm::$plugin->tracking->parseReferrers();
+
+        return $result;
+    }
 }
