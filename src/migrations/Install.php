@@ -114,11 +114,17 @@ class Install extends Migration
                     'utmCampaign' => $this->string(255)->defaultValue(null),
                     'utmSource' => $this->string(255)->defaultValue(null),
                     'utmMedium' => $this->string(255)->defaultValue(null),
+                    'utmContent' => $this->string(255)->defaultValue(null),
+                    'utmTerm' => $this->string(255)->defaultValue(null),
                     'referrer' => $this->string(255)->defaultValue(null),
                     'landingPageUrl' => $this->string(255)->defaultValue(null),
                     'pageUrl' => $this->string(255)->defaultValue(null),
                     'elementType' => $this->string(255)->defaultValue(null),
                     'typeId' => $this->integer()->defaultValue(null),
+                    'userId' => $this->integer()->defaultValue(null),
+                    'parsedStatus' => $this->string(15)->defaultValue(null),
+                    'channel' => $this->string(30)->defaultValue(null),
+                    'referrerDomain' => $this->string(30)->defaultValue(null),
 
 
                 ]
@@ -173,6 +179,17 @@ class Install extends Migration
             '{{%persistiveutm_utmtracking}}',
             'elementId',
             '{{%elements}}',
+            'id',
+            'CASCADE',
+            'CASCADE'
+        );
+
+
+        $this->addForeignKey(
+            $this->db->getForeignKeyName('{{%persistiveutm_utmtracking}}', 'userId'),
+            '{{%persistiveutm_utmtracking}}',
+            'userId',
+            '{{%users}}',
             'id',
             'CASCADE',
             'CASCADE'
