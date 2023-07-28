@@ -217,7 +217,7 @@ class Tracking extends Component
     public function getUtmDetails()
     {
       $pageUrl =  null;
-      if(Craft::$app->request)
+      if(Craft::$app->request &&  ! Craft::$app->request->isConsoleRequest )
       {
         $pageUrl = Craft::$app->request->pathInfo;
       }
